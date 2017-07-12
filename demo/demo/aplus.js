@@ -6,7 +6,7 @@ var path = require('path')
 
 
 exports = module.exports = tuple('log!normal', function (log) {
-    return tuple({rule: '/demo/aplus', method: 'GET', noAuth: true,options:{a:1}}, function (req, res, next) {
+    return tuple({rule: /\//, method: 'GET', noAuth: true,options:{a:1}}, function (req, res, next) {
       log.info('Call %s:%j', 'hhgggg', req.query);
       console.log(req._$options_)
       var self = this;
