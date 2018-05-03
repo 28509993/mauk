@@ -41,14 +41,16 @@ exports = module.exports = function (options) {
   //add 增加 import的库或者函数
   app.extend = extend;
   var tree = mauk.treeRouter(app)();
-  tree.load(__dirname);
-  app.use(tree.use(require('./demo/aplus')))
+  tree.load(path.resolve('app/main'));
+  //tree.load(__dirname);
+  //app.use(tree.use(require('./demo/aplus')))
   app.use(servestatic('public', {redirect: false}))
-    .use(favicon('./demo/favicon.ico'))
+    .use(favicon('./app/favicon.ico'))
     .use(tree.route());
   return app;
 }
 
+console.log(__dirname)
 
 
 

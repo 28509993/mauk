@@ -1,7 +1,7 @@
 var options = require('./setting.json')
     //, exec = require('child_process').exec
 
-var app = require('./demo/app.js')(options);
+var app = require('./app/main.js')(options);
 
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
