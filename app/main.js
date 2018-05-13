@@ -40,7 +40,7 @@ exports = module.exports = function (options) {
   //mauk.requireConfig.call(app,extend); 废弃
   //add 增加 import的库或者函数
   app.extend = extend;
-  var tree = mauk.treeRouter(app)();
+  var tree = mauk.treeRouter(app)({domain:'api'});
   tree.load(path.resolve('app/main'));
   //tree.load(__dirname);
   //app.use(tree.use(require('./demo/aplus')))
