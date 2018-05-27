@@ -22,12 +22,11 @@
     "url": "https://github.com/28509993/mauk/issues"
   },
   "homepage": "https://github.com/28509993/mauk#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "ejs": "~2.3.4",
-    "formidable": "^1.0.17",
-    "log4js": "^0.6.26",
+    "ejs": "~2.6.1",
+    "formidable": "^1.2.1",
+    "log4js": "^2.7.0",
     "serve-favicon": "^2.5.0",
     "serve-static": "^1.13.2",
     "underscore": "^1.9.0",
