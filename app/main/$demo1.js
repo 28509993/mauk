@@ -79,7 +79,7 @@ exports = module.exports = tuple('log!access', '_', function (log, _) {
     }),
 
     tuple({noAuth: true, domain:'api', options: {dd:1}}, function hello(req, res, next) {
-      res.success({haha: 'hello'})
+      res.success({haha: 'hello!'})
     }),
 
     tuple({rule: 'article', method: 'GET', view: full('demo1.ejs'), noAuth: true}, function (req, res, next) {
