@@ -1,16 +1,33 @@
 {
-  "name": "xnode",
-  "version": "0.0.2",
-  "private": true,
+  "name": "mauk",
+  "version": "2.0.1",
+  "description": "this web frame",
+  "main": "index.js",
   "scripts": {
     "demo": "node ./demo/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://28509993@github.com/28509993/mauk2.git"
+  },
+  "author": "wangmin",
+  "keywords": [
+    "express",
+    "router",
+    "tree",
+    "mauk"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/28509993/mauk2/issues"
+  },
+  "homepage": "https://github.com/28509993/mauk2#readme",
+  "dependencies": {
   },
   "devDependencies": {
     "express": "~4.18.2",
     "log4js": "^6.9.1",
     "mime-types": "^2.1.35",
     "redis": "^3.1.2"
-  },
-  "dependencies": {
   }
 }

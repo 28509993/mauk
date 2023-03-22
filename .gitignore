@@ -33,7 +33,6 @@ build/Release
 node_modules
 __build__
 client
-package-lock.json
 
 
 .project
