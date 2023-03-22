@@ -1,0 +1,14 @@
+{
+  "port": 6881,
+  "domain": "demo",
+  "profile": "develop",
+  "secret":"wa3d543DTYdaevdj444u4",
+  "redis": [{
+    "sn":0,
+    "address": "localhost",
+    "port": "6379",
+    "options":{"auth_pass":"99Jdh363783hdzd"},
+    "db": 0
+  }]
+}
+
