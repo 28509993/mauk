@@ -6,6 +6,9 @@
   "scripts": {
     "demo": "node ./demo/main.js"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://28509993@github.com/28509993/mauk2.git"
