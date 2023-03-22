@@ -3,6 +3,9 @@
   "version": "2.0.1",
   "description": "this web frame",
   "main": "index.js",
+  "author": "min wang <28509993@qq.com>",
+  "contributors": [
+  ],
   "scripts": {
     "demo": "node ./demo/main.js"
   },
