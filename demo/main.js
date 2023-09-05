@@ -5,6 +5,7 @@ const express = require('express')
 
 
 let setting = require('./conf/demo.json')
+const {raw} = require("express");
 logger.init({domain:setting.domain})
 const log = logger.getLogger()
 log.info(`[server]${process.argv}`)
@@ -85,7 +86,9 @@ function main(setting){
       server.listen(port, onListening);
       server.on('error', onError);
     }
-    builder.start(startServer)
+    builder.waitAll().then(()=>{
+      return startServer()
+    });
   })
   return p;
 }
@@ -93,5 +96,9 @@ function main(setting){
 
 
 
-log.info("[server]start .......")
-main(setting).then(()=>{}, ()=>{})
+log.info("[server]start .......");
+(
+  async () =>{
+    await main(setting);
+  }
+)();

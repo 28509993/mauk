@@ -36,8 +36,8 @@ exports = module.exports = tuple('log!normal','setting',
     let node = clientCache[sn] || clientCache[0];
 		if (!node._database){
 			controller.await(true);
-			log.info('init redis!')
-			log.warn(`redis auth_pass:[${node.options.auth_pass}]`)
+			log.info('[redid]init redis!')
+			log.warn(`[redis]redis auth_pass:[${node.options.auth_pass}]`)
 			let options = {...node.options,detect_buffers: true,retry_strategy: (opt)=>{
 					if (opt.error && opt.error.code === "ECONNREFUSED") {
 						return new Error("The server refused the connection");
