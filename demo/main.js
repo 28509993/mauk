@@ -13,7 +13,7 @@ log.info(`[server] start domain is ${setting.domain}`)
 
 function main(setting){
   const log = logger.getLog()
-  let builder = mauk({contextPath:'main',domain:setting.domain,setting,logger: logger.logPlus()})
+  let builder = mauk({contextPath:'main',domain:setting.domain,setting,logger: logger.plusLog()})
   builder = require('./plus')(builder,{logger:log});
 
 
@@ -32,7 +32,7 @@ function main(setting){
   }
 
   let app = express()
-  app.use(logger.logUse())
+  app.use(logger.useLog())
     //    .use (timeout('5s'))
     //    .use(express.json())
     //    .use(express.urlencoded({ extended: false }))

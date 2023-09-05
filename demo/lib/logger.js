@@ -17,12 +17,12 @@ class LogFactory{
     return logger;
   }
 
-  logUse (category = 'normal'){
+  useLog (category = 'normal'){
     let logger = this.getLog(category)
     return log4js.connectLogger(logger, this.useFormat)
   }
 
-  logPlus (){
+  plusLog (){
     const self = this
     return function log (category){
       return self.getLog(category)
