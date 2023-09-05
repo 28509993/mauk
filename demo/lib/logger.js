@@ -1,54 +1,44 @@
 const log4js = require('log4js')
 let logConfig = require('../conf/logger')
-let useFormat =  logConfig({domain:'normal'}).useFormat
 
-const loggers = {
-  normal: log4js.getLogger('normal')
-}
-
-
-function logfn(category,opt={use: false}) {
-  let logger = null;
-  category = category || 'normal'
-  logger =  loggers[category]
-  if (!logger){
-    logger = log4js.getLogger(category)
-    logger[category] = logger
-  }
-  if (opt.use){
-    logger = log4js.connectLogger(logger, useFormat)
-  }
-  return logger;
-}
-
-logfn.init = function init({domain}){
-  log4js.configure(logConfig({domain}))
-}
-logfn.getLogger = logfn
-
-class LogAppender{
+class LogFactory{
   constructor(logConfig) {
     this.loggers = {}
     this.logConfig = logConfig
+    this.useFormat =  logConfig.useFormat
   }
-  getLogger (domain = 'normal'){
-    let category = domain
-    let  logger =  loggers[category]
+  getLog (category = 'normal'){
+    let  logger =  this.loggers[category]
     if (!logger){
-      log4js.configure(logConfig({domain: category}))
+      log4js.configure(this.logConfig)
       logger = log4js.getLogger(category)
-      logger[category] = logger
+      this.loggers[category] = logger
     }
     return logger;
   }
 
-  getUseLogger (domain = 'normal'){
-    let useFormat =  logConfig({domain}).useFormat
-    let logger = this.getLogger(domain)
-    return log4js.connectLogger(logger, useFormat)
+  logUse (category = 'normal'){
+    let logger = this.getLog(category)
+    return log4js.connectLogger(logger, this.useFormat)
   }
 
-
+  logPlus (){
+    const self = this
+    return function log (category){
+      return self.getLog(category)
+    }
+  }
 }
 
-exports = module.exports =  logfn
+let logFactory = null;
+function createLog ({domain}){
+  if (logFactory){
+    return logFactory
+  }
+  logFactory = new LogFactory(logConfig({domain}))
+  return logFactory;
+}
+
+exports = module.exports =  createLog;
+
+

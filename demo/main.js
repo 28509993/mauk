@@ -1,19 +1,19 @@
 const express = require('express')
-  , logger = require('./lib/logger')
+  // , logger = require('./lib/logger')
+  , createLog = require('./lib/logger')
   ,http = require('http')
   ,mauk = require('../index')
 
 
 let setting = require('./conf/demo.json')
-const {raw} = require("express");
-logger.init({domain:setting.domain})
-const log = logger.getLogger()
+const logger = createLog({domain:setting.domain})
+const log = logger.getLog()
 log.info(`[server]${process.argv}`)
 log.info(`[server] start domain is ${setting.domain}`)
 
 function main(setting){
-  const log = logger.getLogger()
-  let builder = mauk({contextPath:'main',domain:setting.domain,setting,logger})
+  const log = logger.getLog()
+  let builder = mauk({contextPath:'main',domain:setting.domain,setting,logger: logger.logPlus()})
   builder = require('./plus')(builder,{logger:log});
 
 
@@ -32,7 +32,7 @@ function main(setting){
   }
 
   let app = express()
-  app.use(logger('normal',{use: true}))
+  app.use(logger.logUse())
     //    .use (timeout('5s'))
     //    .use(express.json())
     //    .use(express.urlencoded({ extended: false }))
