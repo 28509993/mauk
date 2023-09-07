@@ -23,7 +23,7 @@
     "tree",
     "mauk"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/28509993/mauk/issues"
   },
@@ -37,3 +37,4 @@
     "redis": "^3.1.2"
   }
 }
+

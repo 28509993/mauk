@@ -2,9 +2,7 @@
  * Created by wangmin on 18/7/16.
  */
 exports = module.exports = tuple('log!normal','utils','using','redis!0',function hello(log,utils,using,redis) {
-  const {useFunction} = using.init(__dirname)
-              .add('./separate-demo.js')
-              .build();
+  //const {useFunction} = using(['./separate-demo.js'],__dirname);
   return [
     tuple({auth: 0, rule:'hello'}, async function (r) {
       let result = await useFunction(r)

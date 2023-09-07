@@ -6,6 +6,7 @@ const express = require('express')
 
 
 let setting = require('./conf/demo.json')
+const {raw} = require("express");
 const logger = createLog({domain:setting.domain})
 const log = logger.getLog()
 log.info(`[server]${process.argv}`)
@@ -15,8 +16,6 @@ function main(setting){
   const log = logger.getLog()
   let builder = mauk({contextPath:'main',domain:setting.domain,setting,logger: logger.plusLog()})
   builder = require('./plus')(builder,{logger:log});
-
-
   function notFound (req,res,next) {
     log.warn(`[main] not found! url=${req.originalUrl}`)
     res.status(404);
@@ -50,55 +49,50 @@ function main(setting){
     })
   }
 
-  let p = new Promise((resolve,reject)=>{
-    function onError(error) {
-      if (error.syscall !== 'listen') {
-        throw error;
-      }
-      let bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-      // handle specific listen errors with friendly messages
-      switch (error.code) {
-        case 'EACCES':
-          log.error( `[main] ${bind} requires elevated privileges`);
-          process.exit(1);
-          break;
-        case 'EADDRINUSE':
-          log.error( `[main]  ${bind} is already in use`);
-          process.exit(1);
-          break;
-        default:
-          process.exit(1);
-      }
-      reject(error);
+  function onError(error) {
+    if (error.syscall !== 'listen') {
+      throw error;
     }
+    let bind = typeof port === 'string'
+      ? 'Pipe ' + port
+      : 'Port ' + port;
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case 'EACCES':
+        log.error( `[main] ${bind} requires elevated privileges`);
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        log.error( `[main]  ${bind} is already in use`);
+        process.exit(1);
+        break;
+      default:
+        process.exit(1);
+    }
+  }
 
-    function onListening (){
-      let addr = server.address();
-      let bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-      log.info('[main]Listening on ' + bind);
-      resolve({app})
+  function onListening (){
+    let addr = server.address();
+    let bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    log.info('[main]Listening on ' + bind);
+  }
+  function startServer() {
+    server.listen(port, onListening);
+    server.on('error', onError);
+  }
+  (
+    async () =>{
+      await builder.waitAll();
+      startServer()
     }
-    async function startServer() {
-      server.listen(port, onListening);
-      server.on('error', onError);
-    }
-    builder.waitAll().then(()=>{
-      return startServer()
-    });
-  })
-  return p;
+  )();
 }
 
 
 
 
 log.info("[server]start .......");
-(
-  async () =>{
-    await main(setting);
-  }
-)();
+main(setting);
+

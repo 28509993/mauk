@@ -5,8 +5,7 @@
 
 const redisLib = require('redis')
 
-exports = module.exports = tuple('log!normal','setting',
-	                          function redis(log,setting) {
+exports = module.exports = tuple('log!normal','setting', function redis(log,setting) {
 	const settting  = JSON.parse(JSON.stringify(setting.redis))
 	const  controller = this;
 	if (!Array.isArray(settting)) throw new Error('redis  setting need array!');
@@ -34,10 +33,12 @@ exports = module.exports = tuple('log!normal','setting',
 
   return function (sn) {
     let node = clientCache[sn] || clientCache[0];
-		if (!node._database){
-			controller.await(true);
+		if (node._database){
+			return Promise.resolve(node._database)
+		}
+		let p = new Promise((resolve, reject)=>{
 			log.info('[redid]init redis!')
-			log.warn(`[redis]redis auth_pass:[${node.options.auth_pass}]`)
+			//log.warn(`[redis]redis auth_pass:[${node.options.auth_pass}]`)
 			let options = {...node.options,detect_buffers: true,retry_strategy: (opt)=>{
 					if (opt.error && opt.error.code === "ECONNREFUSED") {
 						return new Error("The server refused the connection");
@@ -48,15 +49,15 @@ exports = module.exports = tuple('log!normal','setting',
 			client.on('error', function (err) {
 			});
 			client.on('ready', function () {
-				controller.await(false);
 				log.info('[redis]redis '+ node.db +' ready!')
+				resolve(node._database)
 			});
 			client.on('quit', function (err) {
 				log.warn('[redis]-------------close')
 			})
 			node.db && client.select(node.db);
 			node._database = new Client(client);
-		}
-		return node._database;
+		})
+		return p;
   }
 });
