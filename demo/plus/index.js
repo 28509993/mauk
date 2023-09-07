@@ -9,5 +9,6 @@ exports = module.exports = function (builder,{logger}) {
     .addPlus("./context.js",__dirname)
     .addPlus("./utils.js",__dirname)
     .addPlus("./redis.js",__dirname)
+    .addPlus("./session.js",__dirname)
   return builder;
 }
