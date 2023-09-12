@@ -12,9 +12,16 @@ exports = module.exports = tuple('log!normal','utils','using','redis!0',function
     tuple({auth: 0, rule:'hello1'},async function (r) {
       r.result = {hello:'hello world'}
     }),
-    tuple({auth:1, rule:'post'}, async function (r) {
+    tuple({auth:0, rule:'post'}, async function (r) {
       r.result = r.query
+    }),
+    tuple({auth:1, rule:'pp/:pathd'}, async function (r) {
+      r.result = r.query
+    }),
+    tuple({auth:0, rule:'/'}, async function (r) {
+      r.result = {aa: 'axa'}
     })
+
   ];
 });
 

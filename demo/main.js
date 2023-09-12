@@ -14,7 +14,9 @@ log.info(`[server] start domain is ${setting.domain}`)
 
 function main(setting){
   const log = logger.getLog()
-  let builder = mauk({contextPath:'main',domain:setting.domain,setting,logger: logger.plusLog()})
+  let builder = mauk(
+      {contextPath:'main',domain:setting.domain,setting,
+        logger: logger.plusLog(), logLevel: 'info'})
   builder = require('./plus')(builder,{logger:log});
   function notFound (req,res,next) {
     log.warn(`[main] not found! url=${req.originalUrl}`)
